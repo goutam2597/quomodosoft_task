@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:quomodosoft_task/app/assets_path.dart';
 import '../../../../app/app_colors.dart';
 
-// Reusable widget for displaying social login buttons (Google and Facebook).
-
+/// Reusable widget for displaying social login buttons with SVG logos (Google and Facebook).
 class SocialLoginWidget extends StatelessWidget {
   final VoidCallback onGoogleTap;
   final VoidCallback onFacebookTap;
@@ -22,18 +22,17 @@ class SocialLoginWidget extends StatelessWidget {
         // Google login button
         Expanded(
           child: _buildSocialButton(
-            icon: FontAwesomeIcons.google,
+            iconAsset: AssetsPath.googleIcon,
             label: " Google",
             onPressed: onGoogleTap,
           ),
         ),
-
         const SizedBox(width: 16),
 
         // Facebook login button
         Expanded(
           child: _buildSocialButton(
-            icon: FontAwesomeIcons.facebookF,
+            iconAsset: AssetsPath.facebookIcon,
             label: " Facebook",
             onPressed: onFacebookTap,
           ),
@@ -42,15 +41,19 @@ class SocialLoginWidget extends StatelessWidget {
     );
   }
 
-  // Social login button with icon and label
+  /// Social login button with SVG icon and text label
   Widget _buildSocialButton({
-    required IconData icon,
+    required String iconAsset,
     required String label,
     required VoidCallback onPressed,
   }) {
     return OutlinedButton.icon(
       onPressed: onPressed,
-      icon: FaIcon(icon, size: 24),
+      icon: SvgPicture.asset(
+        iconAsset,
+        height: 24,
+        width: 24,
+      ),
       label: Text(
         label,
         style: const TextStyle(

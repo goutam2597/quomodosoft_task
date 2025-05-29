@@ -21,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _rememberMe = false;
 
-  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   @override
@@ -73,14 +73,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         // Name Field
                         const Text(
-                          "Name*",
+                          "Email*",
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(height: 6),
                         CustomTextField(
-                          controller: _nameController,
-                          hintText: "Name here",
-                          validatorMessage: "Name is required",
+                          controller: _emailController,
+                          hintText: "Email here",
+                          validatorMessage: "Email is required",
                         ),
                         const SizedBox(height: 16),
 
