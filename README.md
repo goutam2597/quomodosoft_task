@@ -1,7 +1,5 @@
 # Project Structure Overview
 
-This Flutter project is organized using a **feature-first** folder structure for scalability and clarity.
-
 ## 📁 Folder Breakdown
 
 - **lib/app/**: App-wide configurations including colors, themes, and asset paths.
@@ -14,12 +12,6 @@ This Flutter project is organized using a **feature-first** folder structure for
 ## ✅ Strengths
 - Clean separation by feature makes scaling and maintenance easier.
 - Reusable widgets are clearly scoped within their features.
-
-## 🛠️ Suggestions for Improvement
-- Move `product_widget.dart` from `features/products/widgets/` to `features/products/ui/widgets/` for consistency.
-- Add `domain/` folders under each feature (e.g., `features/home/domain/`) for models and business logic if the app grows.
-- Add `services/` or `repository/` under `data/` if you're integrating APIs.
-- Move `common/` outside `features/` if it’s truly shared globally across many features.
 
 ## 🧱 Possible Clean Architecture Layout (Optional Upgrade)
 ```
