@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quomodosoft_task/features/auth/ui/screens/login_screen.dart';
+import 'package:quomodosoft_task/features/auth/ui/screens/signup_screen.dart';
 import 'package:quomodosoft_task/features/common/ui/screens/bottom_nav_bar.dart';
 import '../../../../app/app_colors.dart';
 import '../../../../app/assets_path.dart';

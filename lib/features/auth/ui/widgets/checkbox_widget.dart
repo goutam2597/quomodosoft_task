@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-/// Reusable custom checkbox.
+/// Reusable checkbox
+
 class CustomCheckboxWithLabel extends StatelessWidget {
   final String label;
   final bool value;
@@ -16,10 +17,11 @@ class CustomCheckboxWithLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      // Tapping anywhere on the row toggles the checkbox
       onTap: () => onChanged(!value),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          // The checkbox
           Checkbox(
             value: value,
             activeColor: Colors.blue,
@@ -29,10 +31,8 @@ class CustomCheckboxWithLabel extends StatelessWidget {
             onChanged: (v) => onChanged(v ?? false),
           ),
 
-          const SizedBox(width: 6),
-          Expanded(
-            child: Text(label, style: Theme.of(context).textTheme.bodyMedium),
-          ),
+          // The label next to the checkbox
+          Text(label),
         ],
       ),
     );
