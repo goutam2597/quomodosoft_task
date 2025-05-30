@@ -13,28 +13,29 @@
 - Clean separation by feature makes scaling and maintenance easier.
 - Reusable widgets are clearly scoped within their features.
 
-## 🧱 Possible Clean Architecture Layout (Optional Upgrade)
+## 🧱 Clean Architecture Layout
 ```
-lib/
-├── core/                       # Shared components or services
+lib/         
+├── app/                        # Default App configs
 ├── features/
 │   ├── auth/
-│   │   ├── data/              # Data sources, services 
-│   │   └── presentation/      # Screens and widgets
+│   │   ├── data/               # Data sources, services 
+│   │   └── ui/                 # Screens and widgets
 │   │       ├── screens/
 │   │       └── widgets/
 │   ├── common/
-│   │   └── presentation/
+│   │   └── ui/
 │   │       ├── screens/
 │   │       └── widgets/
 │   ├── home/
 │   │   ├── data/
-│   │   └── presentation/
+│   │   └── ui/
 │   │       ├── screens/
 │   │       └── widgets/
 │   └── products/
 │       ├── data/
-│       └── presentation/
+│       └── ui/
+│           │── screens/
 │           └── widgets/
 └── main.dart
 ```
