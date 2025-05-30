@@ -1,5 +1,4 @@
 # Project Structure Overview
-
 ## 📁 Folder Breakdown
 
 - **lib/app/**: App-wide configurations including colors, themes, and asset paths.
