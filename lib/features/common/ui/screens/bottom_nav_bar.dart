@@ -30,9 +30,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
     super.initState();
     _navScreens = [
       const HomeScreen(),
-      const Center(child: Text('Search')),
-      const Center(child: Text('Products')),
-      const Center(child: Text('Profile')),
+      const Center(child: Text('Save')),
+      const Center(child: Text('Message')),
+      const Center(child: Text('More')),
     ];
   }
 

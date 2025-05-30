@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:quomodosoft_task/features/home/ui/widgets/greeting_widget.dart';
 
 import '../../../../app/app_colors.dart';
 import '../../../../app/assets_path.dart';
@@ -33,10 +34,7 @@ class HomeSectionHeaderWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: const [
-                    Text(
-                      'Good Morning!',
-                      style: TextStyle(color: Colors.white, fontSize: 12),
-                    ),
+                    GreetingWidget(),
                     Text(
                       'Wilson AH',
                       style: TextStyle(
