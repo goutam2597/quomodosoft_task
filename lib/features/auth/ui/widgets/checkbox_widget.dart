@@ -17,7 +17,6 @@ class CustomCheckboxWithLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // Tapping anywhere on the row toggles the checkbox
       onTap: () => onChanged(!value),
       child: Row(
         children: [
