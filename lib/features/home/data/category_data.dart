@@ -15,4 +15,8 @@ final List<CarCategory> carCategories = [
   CarCategory(title: 'BMW', imagePath: AssetsPath.chevrolet),
   CarCategory(title: 'Aston Martin', imagePath: AssetsPath.honda),
   CarCategory(title: 'Jeep', imagePath: AssetsPath.bmw),
+  CarCategory(title: 'Audi', imagePath: AssetsPath.mazda),
+  CarCategory(title: 'BMW', imagePath: AssetsPath.chevrolet),
+  CarCategory(title: 'Aston Martin', imagePath: AssetsPath.honda),
+  CarCategory(title: 'Jeep', imagePath: AssetsPath.bmw),
 ];

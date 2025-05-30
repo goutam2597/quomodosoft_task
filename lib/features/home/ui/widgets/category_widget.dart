@@ -13,7 +13,7 @@ class CategoryWidget extends StatelessWidget {
       onTap: () {},
       child: Card(
         color: Colors.white,
-        elevation: 0.2,
+        elevation: 0.004,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
         child: SizedBox(
           width: 100,
