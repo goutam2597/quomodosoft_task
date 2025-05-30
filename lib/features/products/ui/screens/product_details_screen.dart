@@ -100,8 +100,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ),
                   const SizedBox(height: 16),
                   Divider(thickness: 10, color: Colors.grey.shade100),
-
                   // Suggestion section title
+                  const SizedBox(height: 8),
                   Text('Suggestions', style: sectionTitleStyle),
                   const SizedBox(height: 8),
 
@@ -125,7 +125,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         Expanded(
           child: Text(
             widget.product.name,
-            style: textTheme.titleLarge!.copyWith(fontWeight: FontWeight.w600),
+            style: textTheme.titleLarge!.copyWith(
+              fontWeight: FontWeight.w600,
+              color: AppColors.headingColor,
+            ),
           ),
         ),
         Column(
