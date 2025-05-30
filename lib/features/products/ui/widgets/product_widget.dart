@@ -48,16 +48,19 @@ class ProductWidget extends StatelessWidget {
                       top: 8,
                       right: 8,
                       child: Container(
-                        height: 32,
-                        width: 32,
+                        height: 40,
+                        width: 40,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           color: Colors.white,
                         ),
-                        child: Icon(
-                          FontAwesomeIcons.heart,
-                          color: AppColors.themeColor,
-                          size: 16,
+                        child: IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            FontAwesomeIcons.heart,
+                            color: AppColors.themeColor,
+                            size: 24,
+                          ),
                         ),
                       ),
                     ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../data/category_data.dart';
 
-/// Widget to display car category
+/// Widget to display car category using Card instead of Container
 class CategoryWidget extends StatelessWidget {
   final CarCategory category;
 
@@ -9,24 +9,28 @@ class CategoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 90,
-      margin: const EdgeInsets.only(right: 10),
-      decoration: BoxDecoration(
+    return InkWell(
+      onTap: () {},
+      child: Card(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(category.imagePath, width: 64, fit: BoxFit.contain),
-          const SizedBox(height: 8),
-          Text(
-            category.title,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+        elevation: 0.2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+        child: SizedBox(
+          width: 100,
+          height: 90,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(category.imagePath, width: 64, fit: BoxFit.contain),
+              const SizedBox(height: 8),
+              Text(
+                category.title,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -39,14 +43,14 @@ class CarCategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 100,
+      height: 90,
       child: ListView.separated(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         scrollDirection: Axis.horizontal,
         itemCount: carCategories.length,
         itemBuilder: (context, index) =>
             CategoryWidget(category: carCategories[index]),
-        separatorBuilder: (_, __) => const SizedBox(width: 12),
+        separatorBuilder: (_, __) => const SizedBox(width: 6),
       ),
     );
   }
