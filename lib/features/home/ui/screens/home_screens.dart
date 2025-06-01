@@ -1,20 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:quomodosoft_task/app/app_colors.dart';
+import 'package:get/get.dart';
 import 'package:quomodosoft_task/app/assets_path.dart';
 import 'package:quomodosoft_task/features/home/data/car_dealer_data.dart';
 import 'package:quomodosoft_task/features/home/data/carousel_slides_data.dart';
-import 'package:quomodosoft_task/features/home/ui/widgets/custom_carousel_widget.dart';
+import 'package:quomodosoft_task/features/home/ui/widgets/custom_slider_widget.dart';
 import 'package:quomodosoft_task/features/home/ui/widgets/dealer_widget.dart';
 import 'package:quomodosoft_task/features/products/data/product_data.dart';
 import 'package:quomodosoft_task/features/products/ui/widgets/product_widget.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import '../../../products/ui/widgets/car_item_widget.dart';
+import '../controller/home_screen_controller.dart';
 import '../widgets/category_widget.dart';
 import '../widgets/header_widget.dart';
+import '../widgets/home_primary_slider_widget.dart';
 import '../widgets/home_section_header_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final controller = Get.put(HomeScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -23,137 +33,102 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          // Header with logo, search bar, and actions
-          const HomeSectionHeaderWidget(),
-
-          const SizedBox(height: 32),
-
-          // Body Section
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Primary carousel slider with texts and images(method called)
-                        _buildPrimaryCustomCarouselWidget(),
-
-                        // Section: Car categories
-                        FadeIn(
-                          child: HeaderWidget(title: 'Popular Categories', onTap: () {}),
-                        ),
-                        const CarCategoryList(),
-
-                        // Section: featured car listings
-                        FadeIn(
-                          child: HeaderWidget(
-                            title: 'Feature Car Listings',
-                            onTap: () {},
-                          ),
-                        ),
-                        _buildHorizontalProductList(),
-
-                        const SizedBox(height: 16),
-
-                        // Secondary promotional carousel with image only
-                        CustomCarouselWidget(
-                          slides: carouselSlides,
-                          height: 140,
-                          itemBuilder: (context, slide) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
-                                image: DecorationImage(
-                                  image: AssetImage(slide.fixedBannerImage!),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-
-                        const SizedBox(height: 8),
-
-                        // Section: Top dealers list
-                        FadeIn(
-                          child: HeaderWidget(title: 'Top Dealers', onTap: () {}),
-                        ),
-                        const SizedBox(height: 8),
-                        _buildDealerList(),
-
-                        const SizedBox(height: 10),
-                      ],
-                    ),
-                  ),
-
-                  // promotional banner to become car dealers (method called).
-                  const SizedBox(height: 16),
-                  _buildJoinDealerBanner(screenWidth),
-                  const SizedBox(height: 10),
-
-                  // Car grid listing section
-                  _buildCarGridSection(),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Primary carousel slider with texts and images method
-  CustomCarouselWidget<CarouselSlide> _buildPrimaryCustomCarouselWidget() {
-    return CustomCarouselWidget(
-      slides: carouselSlides,
-      itemBuilder: (context, slide) {
-        return Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: AppColors.themeColor,
-            borderRadius: BorderRadius.circular(6),
-            image: const DecorationImage(
-              image: AssetImage(AssetsPath.groupStack),
-              fit: BoxFit.contain,
-            ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return SizedBox(child: Center(child: CircularProgressIndicator()));
+        }
+        {
+          return Column(
             children: [
-              if (slide.title != null)
-                Text(
-                  slide.title!,
-                  style: const TextStyle(color: Colors.white, fontSize: 14),
-                ),
-              if (slide.subtitle != null) ...[
-                const SizedBox(height: 4),
-                Text(
-                  slide.subtitle!,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+              // Header with logo, search bar, and actions
+              const HomeSectionHeaderWidget(),
+
+              const SizedBox(height: 32),
+
+              // Body Section
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Primary carousel slider with texts and images(method called)
+                            SliderWidget(sliders: controller.sliders),
+
+                            // Section: Car categories
+                            FadeIn(
+                              child: HeaderWidget(
+                                title: 'Popular Categories',
+                                onTap: () {},
+                              ),
+                            ),
+                            const CarCategoryList(),
+
+                            // Section: featured car listings
+                            FadeIn(
+                              child: HeaderWidget(
+                                title: 'Feature Car Listings',
+                                onTap: () {},
+                              ),
+                            ),
+                            _buildHorizontalProductList(),
+
+                            const SizedBox(height: 16),
+
+                            // Secondary promotional carousel with image only
+                            CustomSliderWidget(
+                              slides: carouselSlides,
+                              height: 140,
+                              itemBuilder: (context, slide) {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(6),
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                        slide.fixedBannerImage!,
+                                      ),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+
+                            const SizedBox(height: 8),
+
+                            // Section: Top dealers list
+                            FadeIn(
+                              child: HeaderWidget(
+                                title: 'Top Dealers',
+                                onTap: () {},
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDealerList(),
+
+                            const SizedBox(height: 10),
+                          ],
+                        ),
+                      ),
+
+                      // promotional banner to become car dealers (method called).
+                      const SizedBox(height: 16),
+                      _buildJoinDealerBanner(screenWidth),
+                      const SizedBox(height: 10),
+                      // Car grid listing section
+                      _buildCarGridSection(),
+                    ],
                   ),
-                  textAlign: TextAlign.center,
                 ),
-              ],
-              const SizedBox(height: 4),
-              Image.asset(
-                slide.carImage,
-                height: 80,
-                width: double.infinity,
-                fit: BoxFit.contain,
               ),
             ],
-          ),
-        );
-      },
+          );
+        }
+      }),
     );
   }
 
@@ -174,7 +149,9 @@ class HomeScreen extends StatelessWidget {
                 child: FadeInAnimation(
                   child: Padding(
                     padding: const EdgeInsets.only(right: 8),
-                    child: ProductWidget(product: ProductData.featuredProducts[index]),
+                    child: ProductWidget(
+                      product: ProductData.featuredProducts[index],
+                    ),
                   ),
                 ),
               ),
@@ -221,35 +198,52 @@ class HomeScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           FadeInDown(
-            child: HeaderWidget(title: 'Car Listings', onTap: () {}),
+            child: HeaderWidget(title: 'Latest Cars', onTap: () {}),
           ),
-          const SizedBox(height: 8),
           AnimationLimiter(
             child: GridView.builder(
               padding: EdgeInsets.zero,
-              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: ProductData.featuredProducts.length,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: controller.latestCars.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                crossAxisSpacing: 8,
                 mainAxisSpacing: 8,
-                childAspectRatio: 0.85,
+                crossAxisSpacing: 8,
+                childAspectRatio: 0.75,
               ),
               itemBuilder: (context, index) {
-                return AnimationConfiguration.staggeredGrid(
-                  position: index,
-                  duration: const Duration(milliseconds: 500),
-                  columnCount: 2,
-                  child: SlideAnimation(
-                    verticalOffset: 50.0,
-                    child: FadeInAnimation(
-                      child: ProductWidget(product: ProductData.featuredProducts[index]),
-                    ),
-                  ),
-                );
+                return CarItemWidget(controller.latestCars[index]);
+
               },
             ),
+            // child: GridView.builder(
+            //   padding: EdgeInsets.zero,
+            //   physics: const NeverScrollableScrollPhysics(),
+            //   shrinkWrap: true,
+            //   itemCount: ProductData.featuredProducts.length,
+            //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            //     crossAxisCount: 2,
+            //     crossAxisSpacing: 8,
+            //     mainAxisSpacing: 8,
+            //     childAspectRatio: 0.85,
+            //   ),
+            //   itemBuilder: (context, index) {
+            //     return AnimationConfiguration.staggeredGrid(
+            //       position: index,
+            //       duration: const Duration(milliseconds: 500),
+            //       columnCount: 2,
+            //       child: SlideAnimation(
+            //         verticalOffset: 50.0,
+            //         child: FadeInAnimation(
+            //           child: ProductWidget(
+            //             product: ProductData.featuredProducts[index],
+            //           ),
+            //         ),
+            //       ),
+            //     );
+            //   },
+            // ),
           ),
         ],
       ),

@@ -1,14 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-class CustomCarouselWidget<T> extends StatefulWidget {
+class CustomSliderWidget<T> extends StatefulWidget {
   final List<T> slides;
   final Widget Function(BuildContext, T) itemBuilder;
   final double height;
   final BoxFit fit;
   final bool showIndicator;
 
-  const CustomCarouselWidget({
+  const CustomSliderWidget({
     super.key,
     required this.slides,
     required this.itemBuilder,
@@ -18,11 +18,11 @@ class CustomCarouselWidget<T> extends StatefulWidget {
   });
 
   @override
-  State<CustomCarouselWidget<T>> createState() =>
-      _CustomCarouselWidgetState<T>();
+  State<CustomSliderWidget<T>> createState() =>
+      _CustomSliderWidgetState<T>();
 }
 
-class _CustomCarouselWidgetState<T> extends State<CustomCarouselWidget<T>> {
+class _CustomSliderWidgetState<T> extends State<CustomSliderWidget<T>> {
   final ValueNotifier<int> _selectedIndex = ValueNotifier(0);
 
   @override
