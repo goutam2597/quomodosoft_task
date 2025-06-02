@@ -95,20 +95,20 @@ class CarItemWidget extends StatelessWidget {
                       car.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: Colors.black,
+                        color: AppColors.headingColor
                       ),
                     ),
                     const SizedBox(height: 8),
                     // Car price
                     Text(
                       '\$${car.price}',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: Colors.blue,
+                        color: AppColors.themeColor
                       ),
                     ),
                   ],
