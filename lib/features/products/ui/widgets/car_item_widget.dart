@@ -39,7 +39,7 @@ class CarItemWidget extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: double.infinity,
-                    height: 110,
+                    height: 120,
                     child: Image.network(
                       car.thumbImage, // Car thumbnail image
                       fit: BoxFit.cover,

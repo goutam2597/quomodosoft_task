@@ -127,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // Section: Horizontal product card list
   Widget _buildHorizontalProductList() {
     return SizedBox(
-      height: 250,
+      height: 260,
       child: AnimationLimiter(
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
@@ -200,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 return SizedBox(
                   width: itemWidth,
-                  height: 250,
+                  height: 260,
                   child: CarItemWidget(controller.latestCars[index]),
                 );
               }),
