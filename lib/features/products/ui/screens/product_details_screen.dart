@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:quomodosoft_task/features/common/ui/widgets/search_bar_widget.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:quomodosoft_task/features/products/data/models/cars_model.dart';
 import '../../../../app/app_colors.dart';
-import '../../data/product_data.dart';
+import '../../../home/ui/controller/home_screen_controller.dart';
+import '../widgets/car_item_widget.dart';
 import '../widgets/product_details_carousel_widget.dart';
-import '../widgets/product_widget.dart';
 
 /// Detailed Product Screen
 
 class ProductDetailsScreen extends StatefulWidget {
-  final Product product;
-  const ProductDetailsScreen({super.key, required this.product});
+  final CarsModel car;
+  const ProductDetailsScreen({super.key, required this.car});
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
@@ -20,7 +22,7 @@ class ProductDetailsScreen extends StatefulWidget {
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   final ValueNotifier<int> _selectedIndex = ValueNotifier(0);
-  final List<Product> productsSuggestion = ProductData.allProducts;
+  final controller = Get.put(HomeScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +80,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       Text('Brand:', style: sectionTitleStyle),
                       const SizedBox(width: 4),
                       Text(
-                        widget.product.brand ?? 'Unknown',
+                        widget.car.brand ?? 'Unknown',
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -91,7 +93,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   Text('Description', style: sectionTitleStyle),
                   const SizedBox(height: 8),
                   Text(
-                    widget.product.description,
+                    widget.car.description,
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
@@ -124,7 +126,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       children: [
         Expanded(
           child: Text(
-            widget.product.name,
+            widget.car.title,
             style: textTheme.titleLarge!.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.headingColor,
@@ -134,42 +136,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         Column(
           children: [
             Text(
-              '\$${widget.product.price.toStringAsFixed(0)}',
+              '\$${widget.car.price}',
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 24,
                 color: AppColors.themeColor,
               ),
             ),
-            buildRatingRow(),
           ],
-        ),
-      ],
-    );
-  }
-
-  // Rating stars and number
-  Widget buildRatingRow() {
-    return Row(
-      children: [
-        const Icon(FontAwesomeIcons.solidStar, color: Colors.amber, size: 20),
-        const SizedBox(width: 8),
-        Text(
-          '${widget.product.rating}',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Colors.grey.shade900,
-          ),
-        ),
-        const SizedBox(width: 8),
-        Text(
-          '(${widget.product.reviews})',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            color: Colors.grey.shade600,
-          ),
         ),
       ],
     );
@@ -178,29 +152,19 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   // Suggestion product grid
   Widget buildSuggestionGrid() {
     return AnimationLimiter(
-      child: GridView.builder(
-        itemCount: productsSuggestion.length,
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 8,
-          mainAxisSpacing: 8,
-          childAspectRatio: 0.85,
-        ),
-        itemBuilder: (context, index) {
-          return AnimationConfiguration.staggeredGrid(
-            position: index,
-            columnCount: 2,
-            duration: const Duration(milliseconds: 400),
-            child: SlideAnimation(
-              verticalOffset: 50.0,
-              child: FadeInAnimation(
-                child: ProductWidget(product: productsSuggestion[index]),
-              ),
-            ),
+      child: Wrap(
+        spacing: 8,
+        runSpacing: 8,
+        children: List.generate(controller.latestCars.length, (index) {
+          final screenWidth = MediaQuery.of(context).size.width;
+          final itemWidth = (screenWidth - 16 * 2 - 8) / 2;
+
+          return SizedBox(
+            width: itemWidth,
+            height: 250,
+            child: CarItemWidget(controller.latestCars[index]),
           );
-        },
+        }),
       ),
     );
   }
@@ -255,10 +219,3 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 }
 
-// Dummy CartItem class (ensure you use your actual model in production)
-class CartItem {
-  final Product product;
-  final int quantity;
-
-  CartItem({required this.product, required this.quantity});
-}

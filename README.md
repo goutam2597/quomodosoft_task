@@ -2,10 +2,16 @@
 ## 📁 Folder Breakdown
 
 - **lib/app/**: App-wide configurations including colors, themes, and asset paths.
-- **lib/features/**: Divided by features (`auth`, `home`, `products`, `common`) and each feature contains:
-  - `data/` - for dummy/mock data or later services/repositories
-  - `ui/screens/` - for screen widgets
-  - `ui/widgets/` - for reusable widgets within the feature
+  - **lib/features/**: Divided by features (`auth`, `home`, `products`, `common`) and each feature contains:
+    - `data/` - for dummy/mock data or later services/repositories
+    - `ui/screens/` - for screen widgets
+    - `ui/widgets/` - for reusable widgets within the feature
+    - `ui/controller/` – GetX or other state management logic (optional per feature)
+
+    - ** lib/services/
+    App-wide services such as:
+    - `network_caller/` – Handles API calls (NetworkCaller, NetworkResponse)
+
 - **main.dart**: Entry point of the application.
 
 ## ✅ Strengths
@@ -28,14 +34,19 @@ lib/
 │   │       └── widgets/
 │   ├── home/
 │   │   ├── data/
+│   │   │   └── models/
 │   │   └── ui/
-│   │       ├── screens/
+│   │       ├── controller/
+│   │       └── screens/
 │   │       └── widgets/
 │   └── products/
 │       ├── data/
+│       │   └── models/
 │       └── ui/
 │           │── screens/
 │           └── widgets/
+├── services/
+│   └── network_caller/
 └── main.dart
 ```
 

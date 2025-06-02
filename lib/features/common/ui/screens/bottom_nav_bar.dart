@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:quomodosoft_task/app/app_colors.dart';
 import 'package:quomodosoft_task/app/assets_path.dart';
-import 'package:quomodosoft_task/features/home/ui/screens/home_screens.dart';
+import 'package:quomodosoft_task/features/home/ui/screens/home_screen.dart';
 
 /// Main bottom navigation bar controller
 class BottomNavBar extends StatefulWidget {

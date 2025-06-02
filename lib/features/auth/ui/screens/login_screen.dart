@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quomodosoft_task/app/app_colors.dart';
 import 'package:quomodosoft_task/features/auth/ui/screens/signup_screen.dart';
 
-import '../../../home/ui/screens/home_screens.dart';
+import '../../../home/ui/screens/home_screen.dart';
 import '../widgets/checkbox_widget.dart';
 import '../widgets/custom_password_field_widget.dart';
 import '../widgets/custom_text_field_widget.dart';

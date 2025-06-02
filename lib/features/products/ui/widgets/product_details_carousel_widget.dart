@@ -20,19 +20,18 @@ class ProductDetailsCarouselWidget extends StatelessWidget {
       options: CarouselOptions(
         height: 360,
         viewportFraction: 1,
-        // Update selected index when the carousel page changes
         onPageChanged: (currentIndex, reason) {
           _selectedIndex.value = currentIndex;
         },
       ),
-      // Map product image list to image widgets
-      items: widget.product.image.map<Widget>((imgPath) {
-        return Image.asset(
-          imgPath,
-          fit: BoxFit.contain,
+      items: [
+        // Display the car's thumbnail image in the carousel
+        Image.network(
+          widget.car.thumbImage,
+          fit: BoxFit.cover,
           width: double.infinity,
-        );
-      }).toList(),
+        ),
+      ],
     );
   }
 }

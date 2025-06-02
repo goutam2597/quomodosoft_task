@@ -5,8 +5,6 @@ import 'package:quomodosoft_task/features/home/data/car_dealer_data.dart';
 import 'package:quomodosoft_task/features/home/data/carousel_slides_data.dart';
 import 'package:quomodosoft_task/features/home/ui/widgets/custom_slider_widget.dart';
 import 'package:quomodosoft_task/features/home/ui/widgets/dealer_widget.dart';
-import 'package:quomodosoft_task/features/products/data/product_data.dart';
-import 'package:quomodosoft_task/features/products/ui/widgets/product_widget.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import '../../../products/ui/widgets/car_item_widget.dart';
@@ -42,9 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               // Header with logo, search bar, and actions
               const HomeSectionHeaderWidget(),
-
               const SizedBox(height: 32),
-
               // Body Section
               Expanded(
                 child: SingleChildScrollView(
@@ -58,7 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             // Primary carousel slider with texts and images(method called)
                             SliderWidget(sliders: controller.sliders),
-
                             // Section: Car categories
                             FadeIn(
                               child: HeaderWidget(
@@ -67,18 +62,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             const CarCategoryList(),
-
                             // Section: featured car listings
                             FadeIn(
                               child: HeaderWidget(
-                                title: 'Feature Car Listings',
+                                title: 'Featured Car Listings',
                                 onTap: () {},
                               ),
                             ),
+                            //Section: featured car listings method
                             _buildHorizontalProductList(),
-
                             const SizedBox(height: 16),
-
                             // Secondary promotional carousel with image only
                             CustomSliderWidget(
                               slides: carouselSlides,
@@ -114,13 +107,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
-
                       // promotional banner to become car dealers (method called).
                       const SizedBox(height: 16),
                       _buildJoinDealerBanner(screenWidth),
                       const SizedBox(height: 10),
                       // Car grid listing section
-                      _buildCarGridSection(),
+                      _buildCarGridSection(context),
                     ],
                   ),
                 ),
@@ -135,11 +127,11 @@ class _HomeScreenState extends State<HomeScreen> {
   // Section: Horizontal product card list
   Widget _buildHorizontalProductList() {
     return SizedBox(
-      height: 220,
+      height: 250,
       child: AnimationLimiter(
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: ProductData.featuredProducts.length,
+          itemCount: controller.featuredCars.length,
           itemBuilder: (context, index) {
             return AnimationConfiguration.staggeredList(
               position: index,
@@ -149,9 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: FadeInAnimation(
                   child: Padding(
                     padding: const EdgeInsets.only(right: 8),
-                    child: ProductWidget(
-                      product: ProductData.featuredProducts[index],
-                    ),
+                    child: CarItemWidget(controller.featuredCars[index]),
                   ),
                 ),
               ),
@@ -191,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // Section: Car grid listing
-  Widget _buildCarGridSection() {
+  Widget _buildCarGridSection(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
@@ -201,49 +191,20 @@ class _HomeScreenState extends State<HomeScreen> {
             child: HeaderWidget(title: 'Latest Cars', onTap: () {}),
           ),
           AnimationLimiter(
-            child: GridView.builder(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: controller.latestCars.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 8,
-                crossAxisSpacing: 8,
-                childAspectRatio: 0.75,
-              ),
-              itemBuilder: (context, index) {
-                return CarItemWidget(controller.latestCars[index]);
+            child: Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: List.generate(controller.latestCars.length, (index) {
+                final screenWidth = MediaQuery.of(context).size.width;
+                final itemWidth = (screenWidth - 16 * 2 - 8) / 2;
 
-              },
+                return SizedBox(
+                  width: itemWidth,
+                  height: 250,
+                  child: CarItemWidget(controller.latestCars[index]),
+                );
+              }),
             ),
-            // child: GridView.builder(
-            //   padding: EdgeInsets.zero,
-            //   physics: const NeverScrollableScrollPhysics(),
-            //   shrinkWrap: true,
-            //   itemCount: ProductData.featuredProducts.length,
-            //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            //     crossAxisCount: 2,
-            //     crossAxisSpacing: 8,
-            //     mainAxisSpacing: 8,
-            //     childAspectRatio: 0.85,
-            //   ),
-            //   itemBuilder: (context, index) {
-            //     return AnimationConfiguration.staggeredGrid(
-            //       position: index,
-            //       duration: const Duration(milliseconds: 500),
-            //       columnCount: 2,
-            //       child: SlideAnimation(
-            //         verticalOffset: 50.0,
-            //         child: FadeInAnimation(
-            //           child: ProductWidget(
-            //             product: ProductData.featuredProducts[index],
-            //           ),
-            //         ),
-            //       ),
-            //     );
-            //   },
-            // ),
           ),
         ],
       ),
