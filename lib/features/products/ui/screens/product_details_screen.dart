@@ -161,7 +161,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
           return SizedBox(
             width: itemWidth,
-            height: 250,
+            height: 260,
             child: CarItemWidget(controller.latestCars[index]),
           );
         }),
